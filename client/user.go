@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/mooha76/GoGrpcAuth/client/interfaces"
+	interfaces "github.com/mooha76/GoGrpcAuth/client/interface"
 	"github.com/mooha76/GoGrpcAuth/config"
 	domain "github.com/mooha76/GoGrpcAuth/model"
 	"github.com/mooha76/GoGrpcAuth/pb"
@@ -27,6 +27,51 @@ func NewUserClient(cfg *config.Config) (interfaces.UserClient, error) {
 
 	return &userClient{
 		client: client,
+	}, nil
+}
+
+func (c *userClient) FindUserByEmail(ctx context.Context, email string) (domain.User, error) {
+
+	res, err := c.client.FindUserByEmail(ctx, &pb.FindUserByEmailRequest{
+		Email: email,
+	})
+
+	if err != nil {
+		return domain.User{}, err
+	}
+
+	return domain.User{
+		ID:          res.GetUserId(),
+		FirstName:   res.GetFirstName(),
+		LastName:    res.GetLastName(),
+		Age:         res.GetAge(),
+		Email:       res.GetEmail(),
+		Phone:       res.GetPhone(),
+		Password:    res.GetPassword(),
+		Verified:    res.GetVerified(),
+		BlockStatus: res.GetBlockStatus(),
+	}, nil
+}
+
+func (c *userClient) FindUserByPhone(ctx context.Context, phone string) (domain.User, error) {
+
+	res, err := c.client.FindUserByPhone(ctx, &pb.FindUserByPhoneRequest{
+		Phone: phone,
+	})
+	if err != nil {
+		return domain.User{}, err
+	}
+
+	return domain.User{
+		ID:          res.GetUserId(),
+		FirstName:   res.GetFirstName(),
+		LastName:    res.GetLastName(),
+		Age:         res.GetAge(),
+		Email:       res.GetEmail(),
+		Phone:       res.GetPhone(),
+		Password:    res.GetPassword(),
+		Verified:    res.GetVerified(),
+		BlockStatus: res.GetBlockStatus(),
 	}, nil
 }
 
