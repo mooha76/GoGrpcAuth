@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package pb;
+option go_package = "./pb";
+
+
+
+service AuthService {
+    rpc UserSignup(UserSignupRequest) returns (UserSignupResponse){};
+    rpc UserLogin(UserLoginRequest) returns (UserLoginResponse){};
+    rpc VerifyUserAccessToken(VerifyUserAccessTokenRequest) returns (VerifyUserAccessTokenResponse){};
+    rpc UserSignupVerify(UserSignupVerifyRequest) returns (UserSignupVerifyResponse){}
+    rpc RefreshAccessToken(RefreshAccessTokenRequest) returns (RefreshAccessTokenResponse) {}
+}
+
+// user signup
+message UserSignupRequest {
+    string first_name = 1;
+    string last_name = 2;
+    uint64 age = 3;
+    string email = 4;
+    string phone  = 5;
+    string user_name = 6;
+    string password = 7;
+}
+message UserSignupResponse{
+    string otp_id = 1;
+}
+
+// signup verify
+message UserSignupVerifyRequest {
+    string otp_id = 1;
+    string otp_code = 2;
+}
+message UserSignupVerifyResponse {
+    string access_token = 1;
+    string refresh_token = 2;
+}
+
+// verify access token
+message VerifyUserAccessTokenRequest{
+    string access_token = 1;
+}
+message VerifyUserAccessTokenResponse{
+    uint64 user_id = 1;
+}
+
+// refresh access token
+message RefreshAccessTokenRequest {
+    enum UserType {
+        User = 0;
+        Admin = 1;
+    }
+    UserType used_for = 1;
+    string refresh_token = 2;
+}
+message RefreshAccessTokenResponse{
+    string access_token = 1;
+}
+
+// user login
+message UserLoginRequest {
+    string email = 1;
+    string phone = 2;
+    string password = 3;
+}
+
+message UserLoginResponse {
+    string access_token = 1;
+    string refresh_token = 2;
+}

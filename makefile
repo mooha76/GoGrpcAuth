@@ -1,8 +1,8 @@
 proto:
-	protoc --go_out=. --go-grpc_out=. ./pkg/proto/*.proto
+	protoc --go_out=. --go-grpc_out=. ./proto/*.proto
 
 wire:
-	cd pkg/di && wire
+	cd di && wire
 
 run:
 	go run cmd/main.go
