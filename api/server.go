@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net"
 
-	"github.com/nikhilnarayanan623/ecommerce-microservice-clean-arch/auth-service/pkg/config"
-	"github.com/nikhilnarayanan623/ecommerce-microservice-clean-arch/auth-service/pkg/pb"
+	"github.com/mooha76/GoGrpcAuth/config"
+	"github.com/mooha76/GoGrpcAuth/pb"
 	"google.golang.org/grpc"
 )
 
